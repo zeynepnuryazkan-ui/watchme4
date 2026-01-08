@@ -1,0 +1,57 @@
+<nav style="background: #000; padding: 15px; display: flex; gap: 20px; border-bottom: 2px solid #e50914;">
+    <a href="anasayfa.html" style="color: white; text-decoration: none; font-weight: bold;">📺 Ana Sayfa</a>
+    <a href="yazar.html" style="color: white; text-decoration: none; font-weight: bold;">✍️ Yazar Paneli</a>
+    <a href="admin.html" style="color: white; text-decoration: none; font-weight: bold;">🛡️ Admin</a>
+    <a href="index.html" style="color: #e50914; text-decoration: none; margin-left: auto;">🚪 Çıkış</a>
+</nav><body style="background: #111; color: white; font-family: sans-serif;">
+    <h1>Watch Me - Admin Paneli</h1>
+    <h2>Gelen Şikayetler (Report System)</h2>
+    <div id="liste"></div>
+
+    <script>
+        fetch('/admin-verileri')
+            .then(res => res.json())
+            .then(data => {
+                const liste = document.getElementById('liste');
+                data.forEach(r => {
+                    liste.innerHTML += `<p style="border:1px solid red; padding:10px;">
+                        <b>Video:</b> ${r.video} <br>
+                        <b>Sebep:</b> ${r.sebep} <br>
+                        <b>Tarih:</b> ${r.tarih}
+                    </p>`;
+                });
+            });
+   <script>
+    async function raporlariYukle() {
+        // Sayfa açılır açılmaz şifre sorar
+        const sifre = prompt("Lütfen Admin Şifresini Giriniz:");
+        
+        // Sunucuya şifre ile istek atar
+        const response = await fetch(`/admin-verileri?sifre=${sifre}`);
+        
+        if (response.status === 401) {
+            alert("Hatalı şifre! Erişim reddedildi.");
+            window.location.href = "dashboard.html";
+            return;
+        }
+
+        const raporlar = await response.json();
+        const liste = document.getElementById('raporListesi');
+        
+        if (raporlar.length === 0) {
+            liste.innerHTML = "<p>Henüz raporlanmış bir video yok.</p>";
+            return;
+        }
+
+        liste.innerHTML = raporlar.map(r => `
+            <div style="background: #222; margin-bottom: 10px; padding: 15px; border-left: 5px solid #e50914;">
+                <strong>Video:</strong> ${r.video} <br>
+                <strong>Sebep:</strong> ${r.sebep} <br>
+                <small style="color: #888;">Tarih: ${r.tarih}</small>
+            </div>
+        `).join('');
+    }
+
+    raporlariYukle();
+</script>
+</body
