@@ -6,7 +6,28 @@
 </nav><body style="background: #111; color: white; font-family: sans-serif;">
     <h1>Watch Me - Admin Paneli</h1>
     <h2>Gelen Şikayetler (Report System)</h2>
-    <div id="liste"></div>
+    <div id="liste"></div><div class="container" id="videoGaleri" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; padding: 20px;">
+    </div>
+
+<script>
+    async function videolariGetir() {
+        const res = await fetch('/videolari-listele');
+        const videolar = await res.json();
+        const galeri = document.getElementById('videoGaleri');
+        
+        galeri.innerHTML = videolar.map(v => `
+            <div style="background:#1f1f1f; border-radius:10px; overflow:hidden;">
+                <img src="${v.kapak || 'https://via.placeholder.com/250x350'}" style="width:100%; height:300px; object-fit:cover;">
+                <div style="padding:15px;">
+                    <h3 style="margin:0; color:#e50914;">${v.kitap}</h3>
+                    <p style="font-size:14px;">Yazar: ${v.yazar}</p>
+                    <a href="izle.html?v=${v.link}" style="color:white; text-decoration:none; font-weight:bold;">İzle →</a>
+                </div>
+            </div>
+        `).join('');
+    }
+    videolariGetir();
+</script>
 
     <script>
         fetch('/admin-verileri')
@@ -22,4 +43,5 @@
                 });
             });
     </script>
+
 </body>
