@@ -22,7 +22,22 @@
 <body>
 
 <div class="panel">
-    <h2>Yazar Paneli</h2>
+    <h2>Yazar Paneli</h2><div class="upload-container" style="background: #1f1f1f; padding: 30px; border-radius: 12px; max-width: 500px; margin: auto;">
+    <h2 style="color: #e50914; text-align: center;">Yeni Tanıtım Yükle</h2>
+    
+    <label>Kitap Adı:</label>
+    <input type="text" id="kitapAdi" placeholder="Kitabın tam adı" style="width:100%; padding:10px; margin:10px 0;">
+    
+    <label>YouTube Video Linki:</label>
+    <input type="text" id="videoLink" placeholder="https://www.youtube.com/watch?v=..." style="width:100%; padding:10px; margin:10px 0;">
+    
+    <label>Kapak Görseli URL (Opsiyonel):</label>
+    <input type="text" id="kapakResmi" placeholder="Görsel linki (JPG/PNG)" style="width:100%; padding:10px; margin:10px 0;">
+
+    <button onclick="videoYukle()" style="width:100%; padding:15px; background:#e50914; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">
+        Tanıtımı Yayınla
+    </button>
+</div>
     <p style="text-align: center; font-size: 14px;">Kitabınızı dünyayla paylaşın.</p>
     
     <input type="text" id="yazarAdi" placeholder="Adınız Soyadınız">
@@ -74,3 +89,4 @@
 
 </body>
 </html>
+
