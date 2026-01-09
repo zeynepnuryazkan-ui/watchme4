@@ -21,14 +21,23 @@ app.post('/kayit', (req, res) => {
 });
 
 // --- YAZAR MODÜLÜ (VİDEO YÜKLEME) ---
-app.post('/video-yukle', (req, res) => {
-    const yeniVideo = { id: videolar.length + 1, ...req.body, tarih: new Date().toLocaleString() };
+app.postapp.post('/video-yukle', (req, res) => {
+    const { kitap, link, kapak, yazar, email } = req.body;
+    
+    const yeniVideo = {
+        id: Date.now(), // Her videoya benzersiz bir numara
+        kitap: kitap,
+        link: link,
+        kapak: kapak || 'default-cover.jpg', // Görsel yoksa varsayılan resim
+        yazar: yazar,
+        email: email,
+        tarih: new Date().toLocaleDateString()
+    };
+    
     videolar.push(yeniVideo);
-    res.send({ mesaj: "Tanıtım yayına alındı!" });// server.js içindeki ilgili kısmı bununla değiştir
-app.get('/admin-verileri', (req, res) => {
-    const gelenSifre = req.query.sifre;
-    const GERCEK_SIFRE = "admin123"; // Buraya kendi gizli şifreni yaz!
-
+    console.log("Yeni video eklendi:", yeniVideo);
+    res.status(200).json({ mesaj: "Başarıyla yüklendi!" });
+});
     if (gelenSifre === GERCEK_SIFRE) {
         res.json(raporlar);
     } else {
@@ -50,3 +59,4 @@ app.get('/admin-verileri', (req, res) => res.json(raporlar));
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`🚀 Watch Me yayında: Port ${PORT}`));
+
